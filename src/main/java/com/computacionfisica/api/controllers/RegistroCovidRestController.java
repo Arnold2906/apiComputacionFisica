@@ -32,6 +32,22 @@ public class RegistroCovidRestController {
 	public List<RegistroCovid> index() {
 		return registroCovidService.findAll();
 	}
+
+	@PostMapping("/mostrar/{temperatura}")
+	public ResponseEntity<?> mostrarxUrl(@PathVariable float temperatura){
+		Map<String, Object> response = new HashMap<>();
+		List<Object[]> registroLast;
+		try {
+			 registroLast = registroCovidService.mostrar(temperatura);
+		} catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} 
+		response.put("mensaje", "temperatura guardada");
+		response.put("registro", registroLast);
+		return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK );
+	}
 	
 	@PostMapping("/temperatura")
 	public ResponseEntity<?> mostrar(@RequestBody Map<String, Object> temperatura) {
