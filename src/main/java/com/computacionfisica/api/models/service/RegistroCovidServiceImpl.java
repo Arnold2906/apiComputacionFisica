@@ -44,4 +44,10 @@ public class RegistroCovidServiceImpl implements IRegistroCovidService {
 		return registroCovidDao.mostrar(temperatura);
 	}
 
+	@Override
+	public List<Object[]> registrarHorario(String codigo, String fecha, String hora) {
+		// TODO Auto-generated method stub
+		return registroCovidDao.registrarHorario(codigo, fecha, hora);
+	}
+
 }
